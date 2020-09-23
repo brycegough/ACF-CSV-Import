@@ -43,7 +43,7 @@ class ACF_Admin_Tool_CSV extends ACF_Admin_Tool {
 
 	function html() {
 
-        $field = @$_GET['field'];
+        $field = @$_GET['acf_field'];
         $post = @$_GET['post'];
 
 		?>
@@ -59,7 +59,7 @@ class ACF_Admin_Tool_CSV extends ACF_Admin_Tool {
                 ],
 				'name'		=> 'acf_field',
 				'value'		=> $field,
-                'choices'   => array_merge( ['' => 'Select Field'], acf_csv()->get_repeaters() )
+                'choices'   => array_merge( ['' => 'Select Field'], get_transient('acf_csv_repeaters') )
 			));
 
             acf_render_field_wrap(array(

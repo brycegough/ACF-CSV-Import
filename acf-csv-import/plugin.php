@@ -8,7 +8,7 @@
  * @wordpress-plugin
  * Plugin Name: ACF CSV Import
  * Description: Import ACF Repeater values from a CSV file.
- * Version:     1.0
+ * Version:     1.1
  * Author: Bryce Gough
  * Author URI: https://freeform.com.au/
  * Text Domain: freeform
@@ -36,6 +36,10 @@ class ACF_CSV {
                 return $field;
             }, $fields);
         }, 10, 2);
+        
+        add_action('init', function() {
+            set_transient( 'acf_csv_repeaters', acf_csv()->get_repeaters() ); 
+        });
     }
 
     public function check_header(&$header, $field_key, $post_id) {
@@ -68,7 +72,7 @@ class ACF_CSV {
         if (!in_array($field['key'], apply_filters('acf/csv_import_fields', []))) return;
 
         $edit_link = acf_get_admin_tool_url('import-csv');
-        $edit_link .= '&field=' . $field['key'];
+        $edit_link .= '&acf_field=' . $field['key'];
         $edit_link .= '&post=' . $field['_acf_post_id'];
         echo "<div style=\"margin-top: 8px;\" class=\"acf-actions\"><a class=\"acf-button button button-primary\" href=\"{$edit_link}\" data-event=\"import-csv\">Import Values from CSV</a></div>";
     }
@@ -76,7 +80,9 @@ class ACF_CSV {
     public function get_repeaters() {
         $repeaters = [];
 
-        foreach (acf_get_field_groups() as $group) {
+        $groups = acf_get_field_groups();
+
+        foreach ($groups as $group) {
             $fields = acf_get_fields($group);
             $group_name = $group['title'];
             if (is_array($fields)) {
@@ -87,7 +93,7 @@ class ACF_CSV {
                 }
             }
         }
-
+        
         return $repeaters;
     }
 

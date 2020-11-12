@@ -1,6 +1,8 @@
 # ACF-CSV-Import
 Import CSV Fields into ACF Repeaters
 
+Tool to import repeater values from CSV files into ACF
+
 ### Usage
 * Install the plugin by copying the folder to your plugins directory, or instal via a ZIP file.
 * Go to Custom Fields -> Tools.

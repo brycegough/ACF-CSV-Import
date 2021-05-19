@@ -8,13 +8,16 @@
  * @wordpress-plugin
  * Plugin Name: ACF CSV Import
  * Description: Import ACF Repeater values from a CSV file.
- * Version:     1.1
+ * Version:     1.2
  * Author: Bryce Gough
  * Author URI: https://freeform.com.au/
  * Text Domain: freeform
  */
 
 define('ACF_CSV', __DIR__);
+
+// Ignore plugin if ACF is missing
+if (!function_exists('get_field')) return;
 
 class ACF_CSV {
 
@@ -36,9 +39,9 @@ class ACF_CSV {
                 return $field;
             }, $fields);
         }, 10, 2);
-        
+
         add_action('init', function() {
-            set_transient( 'acf_csv_repeaters', acf_csv()->get_repeaters() ); 
+            set_transient( 'acf_csv_repeaters', acf_csv()->get_repeaters() );
         });
     }
 
@@ -93,7 +96,7 @@ class ACF_CSV {
                 }
             }
         }
-        
+
         return $repeaters;
     }
 

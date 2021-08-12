@@ -103,5 +103,6 @@ add_action('acf/init', function() {
     global $acf_csv;
     // Init plugin
     $acf_csv = new ACF_CSV();
-    function acf_csv() { global $acf_csv; return $acf_csv; }
 });
+   
+function acf_csv() { global $acf_csv; return $acf_csv; }
